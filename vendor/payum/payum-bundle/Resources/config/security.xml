@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- deprecated since 1.2, will be removed in 2.0. use payum service to get this service -->
+        <service id="payum.security.token_storage" class="Payum\Core\Storage\StorageInterface">
+            <factory service="payum" method="getTokenStorage" />
+        </service>
+
+        <!-- deprecated since 1.2, will be removed in 2.0. use payum service to get this service -->
+        <service id="payum.security.http_request_verifier" class="Payum\Core\Security\HttpRequestVerifierInterface">
+            <factory service="payum" method="getHttpRequestVerifier" />
+        </service>
+
+        <!-- deprecated since 1.2, will be removed in 2.0. use payum service to get this service -->
+        <service id="payum.security.token_factory" class="Payum\Core\Security\GenericTokenFactoryInterface">
+            <factory service="payum" method="getTokenFactory" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,6 @@
+services:
+  app.helper.sim:
+    class: AppBundle\Helper\SimHelper
+    arguments: ["@sylius.repository.product_review","@sylius.repository.product"]
+    calls:
+            -   [ setContainer,[ @service_container ] ]

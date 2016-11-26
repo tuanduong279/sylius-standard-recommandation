@@ -1,0 +1,45 @@
+{
+    "name": "payum/omnipay-bridge",
+    "type": "library",
+    "description": "This  bridge allows you to use omnipay gateways but in payum like way.",
+    "keywords": ["payment", "omnipay"],
+    "homepage": "https://github.com/Payum/OmnipayBridge",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kotlyar Maksim",
+            "email": "kotlyar.maksim@gmail.com"
+        },
+        {
+            "name":     "Payum project",
+            "homepage": "http://payum.org/"
+        },
+        {
+            "name":     "Community contributions",
+            "homepage": "https://github.com/Payum/OmnipayBridge/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "payum/core": "^1",
+        "omnipay/common": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "omnipay/dummy": "~2.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": { "Payum\\OmnipayBridge\\": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Payum\\OmnipayBridge\\Tests\\": "tests" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="payum.available_gateway_factories" type="collection" />
+        <parameter key="payum.capture_path">payum_capture_do</parameter>
+        <parameter key="payum.notify_path">payum_notify_do</parameter>
+        <parameter key="payum.authorize_path">payum_authorize_do</parameter>
+        <parameter key="payum.refund_path">payum_refund_do</parameter>
+    </parameters>
+
+    <services>
+        <!-- Generic -->
+
+        <service id="payum.builder" class="Payum\Core\PayumBuilder">
+            <call method="setMainRegistry">
+                <argument type="service" id="payum.static_registry" />
+            </call>
+            <call method="setHttpRequestVerifier">
+                <argument type="collection">
+                    <argument type="service" id="payum.http_request_verifier_builder" />
+                    <argument>build</argument>
+                </argument>
+            </call>
+            <call method="setTokenFactory">
+                <argument type="collection">
+                    <argument type="service" id="payum.token_factory_builder" />
+                    <argument>build</argument>
+                </argument>
+            </call>
+            <call method="setTokenStorage">
+                <argument type="service" id="payum.security.token_storage" />
+            </call>
+            <call method="setGenericTokenFactoryPaths">
+                <argument type="collection">
+                    <argument key="capture">%payum.capture_path%</argument>
+                    <argument key="notify">%payum.notify_path%</argument>
+                    <argument key="authorize">%payum.authorize_path%</argument>
+                    <argument key="refund">%payum.refund_path%</argument>
+                </argument>
+            </call>
+            <call method="setCoreGatewayFactory">
+                <argument type="service" id="payum.core_gateway_factory_builder" />
+            </call>
+            <call method="setHttpClient">
+                <argument type="service" id="payum.http_client" />
+            </call>
+        </service>
+
+        <service id="payum" class="Payum\Core\Payum">
+            <factory service="payum.builder" method="getPayum" />
+        </service>
+
+        <service id="payum.static_registry" class="Payum\Bundle\PayumBundle\Registry\ContainerAwareRegistry">
+            <argument type="collection" /> <!-- gateways services. this should be replaced while container is built -->
+            <argument type="collection" /> <!-- storages services. this should be replaced while container is built -->
+            <argument type="collection" /> <!-- gateways factories services. this should be replaced while container is built -->
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <!-- deprecated since 1.2, will be removed in 2.0. use payum builder if you want to build gateway -->
+        <service id="payum.core_gateway_factory" class="Payum\Bundle\PayumBundle\CoreGatewayFactory">
+            <factory service="payum.core_gateway_factory_builder" method="build" />
+            <argument type="collection" />
+        </service>
+
+        <!-- deprecated since 1.2, will be removed in 2.0. use payum builder if you want to build gateway -->
+        <service id="payum.gateway_factory" alias="payum.core_gateway_factory" />
+
+        <service id="payum.http_client" class="Payum\Core\HttpClientInterface">
+            <factory class="Payum\Core\Bridge\Guzzle\HttpClientFactory" method="create" />
+        </service>
+
+        <service id="payum.guzzle_client" class="GuzzleHttp\ClientInterface">
+            <factory class="Payum\Core\Bridge\Guzzle\HttpClientFactory" method="createGuzzle" />
+        </service>
+
+        <service id="payum.iso4217" class="Payum\ISO4217\ISO4217" />
+
+        <service id="payum.converter.reply_to_http_response" class="Payum\Core\Bridge\Symfony\ReplyToSymfonyResponseConverter" />
+
+        <service id="payum.listener.reply_to_http_response" class="Payum\Bundle\PayumBundle\EventListener\ReplyToHttpResponseListener">
+            <argument type="service" id="payum.converter.reply_to_http_response" />
+
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="128" />
+        </service>
+
+        <!-- Extensions -->
+
+        <service id="payum.extension.storage.prototype" class="Payum\Core\Extension\StorageExtension" abstract="true" public="false">
+            <argument/> <!-- this should be replaced with real storage service -->
+        </service>
+
+        <service id="payum.extension.logger" class="Payum\Core\Bridge\Psr\Log\LoggerExtension">
+            <argument type="service" id="logger" on-invalid="ignore" />
+
+            <tag name="payum.extension" all="true" alias="psr_logger" />
+        </service>
+
+        <!-- deprecated since 1.2, will be removed in 2.0. registered by payum builder -->
+        <service id="payum.extension.token_factory" class="Payum\Core\Extension\GenericTokenFactoryExtension">
+            <argument type="service" id="payum.security.token_factory" />
+        </service>
+
+        <!-- Actions -->
+
+        <!-- deprecated since 1.2, will be removed in 2.0. registered by payum builder -->
+        <service id="payum.action.get_http_request" class="Payum\Core\Bridge\Symfony\Action\GetHttpRequestAction">
+            <call method="setHttpRequest">
+                <argument type="service" id="request" on-invalid="null" strict="false" />
+            </call>
+        </service>
+
+        <!-- deprecated since 1.2, will be removed in 2.0. registered by payum builder -->
+        <service id="payum.action.obtain_credit_card" class="Payum\Core\Bridge\Symfony\Action\ObtainCreditCardAction">
+            <argument type="service" id="form.factory" />
+            <argument>%payum.template.obtain_credit_card%</argument>
+            <call method="setRequest">
+                <argument type="service" id="request" on-invalid="null" strict="false" />
+            </call>
+        </service>
+
+        <!-- Builders -->
+        <service id="payum.token_factory_builder" class="Payum\Bundle\PayumBundle\Builder\TokenFactoryBuilder" public="false">
+            <argument type="service" id="router" />
+        </service>
+
+        <service id="payum.core_gateway_factory_builder" class="Payum\Bundle\PayumBundle\Builder\CoreGatewayFactoryBuilder" public="false">
+            <argument type="collection" /> <!-- this should be replaced in compiler pass -->
+            <argument type="collection" /> <!-- this should be replaced in compiler pass -->
+            <argument type="collection" /> <!-- this should be replaced in compiler pass -->
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="payum.http_request_verifier_builder" class="Payum\Bundle\PayumBundle\Builder\HttpRequestVerifierBuilder" public="false" />
+    </services>
+</container>

@@ -1,0 +1,41 @@
+{
+    "name": "payum/be2bill",
+    "type": "library",
+    "description": "The Payum extension. It provides Be2Bill payment integration.",
+    "keywords": ["payment", "be2bill"],
+    "homepage": "http://payum.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kotlyar Maksim",
+            "email": "kotlyar.maksim@gmail.com"
+        },
+        {
+            "name":     "Payum project",
+            "homepage": "http://payum.org/"
+        },
+        {
+            "name":     "Community contributions",
+            "homepage": "https://github.com/Payum/Be2Bill/contributors"
+        }
+    ],
+    "require": {
+        "payum/core": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "symfony/phpunit-bridge": "~2.8|~3.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Payum\\Be2Bill": "" }
+    },
+    "target-dir": "Payum/Be2Bill",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+hello:
+    pattern:      /hello/{name}
+    defaults:     { _controller: AppBundle:Rec:index }
+list_product:
+    pattern:      /list         
+    defaults:
+                    _controller: AppBundle:Rec:list 
+                    _sylius:
+                    template: AppBundle:list_product.html.twig
+recommend_product:
+    pattern:      /{id}/recommend         
+    defaults:
+                    _controller: AppBundle:Rec:recommend 
+                    _sylius:
+                    template: AppBundle:list_product.html.twig
+                                        

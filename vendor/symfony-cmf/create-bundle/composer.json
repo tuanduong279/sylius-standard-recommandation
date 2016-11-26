@@ -1,0 +1,43 @@
+{
+    "name": "symfony-cmf/create-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony Bundle for createphp and create.js. The easiest way to make any site editable and have semantic annotations with RDFa.",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Liip AG",
+            "homepage": "http://www.liip.ch/"
+        },
+        {
+            "name": "Symfony CMF Community",
+            "homepage": "https://github.com/symfony-cmf/CreateBundle/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/assetic-bundle": "~2.1",
+        "friendsofsymfony/rest-bundle": "~1.0",
+        "midgard/createphp": "~1.0"
+    },
+    "require-dev": {
+        "jms/serializer-bundle": "^0.12|^1.0",
+        "symfony-cmf/testing": "~1.1"
+    },
+    "suggest": {
+        "jms/serializer-bundle": "Add support for advanced serialization capabilities (^0.12|^1.0)",
+        "symfony-cmf/core-bundle": "To be able to enable 'rest_force_request_locale', ~1.0",
+        "symfony-cmf/media-bundle": "When using the default image support, ~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symfony\\Cmf\\Bundle\\CreateBundle\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    }
+}

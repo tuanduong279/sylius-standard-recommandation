@@ -1,0 +1,45 @@
+{
+    "name": "payum/klarna-invoice",
+    "type": "library",
+    "description": "The Payum extension. It provides Klarna Invoice payment integration.",
+    "keywords": [
+        "payment",
+        "klarna"
+    ],
+    "homepage": "http://payum.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kotlyar Maksim",
+            "email": "kotlyar.maksim@gmail.com"
+        },
+        {
+            "name":     "Payum project",
+            "homepage": "http://payum.org/"
+        },
+        {
+            "name":     "Community contributions",
+            "homepage": "https://github.com/Payum/KlarnaInvoice/contributors"
+        }
+    ],
+    "require": {
+        "payum/core": "~1.0",
+        "fp/klarna-invoice": "0.1.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "symfony/phpunit-bridge": "~2.8|~3.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Payum\\Klarna\\Invoice": "" }
+    },
+    "target-dir": "Payum/Klarna/Invoice",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    }
+}

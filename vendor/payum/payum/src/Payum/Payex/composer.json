@@ -1,0 +1,45 @@
+{
+    "name": "payum/payex",
+    "type": "library",
+    "description": "The Payum extension. It provides Payex payment integration.",
+    "keywords": ["payment", "payex"],
+    "homepage": "http://payum.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kotlyar Maksim",
+            "email": "kotlyar.maksim@gmail.com"
+        },
+        {
+            "name":     "Payum project",
+            "homepage": "http://payum.org/"
+        },
+        {
+            "name":     "Community contributions",
+            "homepage": "https://github.com/Payum/Payex/contributors"
+        }
+    ],
+    "require": {
+        "payum/core": "~1.0",
+        "ext-soap": "*"
+    },
+    "require-dev": {
+        "ext-curl": "*",
+        "ext-pdo_sqlite": "*",
+        "doctrine/orm": "2.3",
+        "phpunit/phpunit": "~4.0",
+        "symfony/phpunit-bridge": "~2.8|~3.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Payum\\Payex": "" }
+    },
+    "target-dir": "Payum/Payex",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    }
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="doctrine_phpcr.jackalope_doctrine_dbal.schema_listener.class">Doctrine\Bundle\PHPCRBundle\EventListener\JackalopeDoctrineDbalSchemaListener</parameter>
+        <parameter key="doctrine_phpcr.jackalope_doctrine_dbal.repository_schema.class">Jackalope\Transport\DoctrineDBAL\RepositorySchema</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="doctrine_phpcr.jackalope.repository.factory.service.jackrabbit"
+                 class="Jackalope\RepositoryFactoryJackrabbit">
+        </service>
+
+        <service id="doctrine_phpcr.jackalope.repository.factory.jackrabbit"
+                 class="Jackalope\Repository"
+        >
+            <argument type="collection"/>
+        </service>
+
+        <service id="doctrine_phpcr.jackalope.repository.factory.service.doctrinedbal"
+                 class="Jackalope\RepositoryFactoryDoctrineDBAL">
+        </service>
+        <service id="doctrine_phpcr.jackalope.repository.factory.doctrinedbal"
+                 class="Jackalope\Repository"
+        >
+            <argument type="collection" />
+        </service>
+
+        <service id="doctrine_phpcr.jackalope.repository.factory.service.prismic"
+                 class="Jackalope\RepositoryFactoryPrismic">
+        </service>
+
+        <service id="doctrine_phpcr.jackalope.repository.factory.prismic"
+                 class="Jackalope\Repository"
+                >
+            <argument type="collection"/>
+        </service>
+
+        <service id="doctrine_phpcr.jackalope.session"
+                 class="Jackalope\Session"
+                 abstract="true"
+        >
+            <argument /><!-- phpcr credentials service (0) -->
+            <argument /><!-- workspace string (1) -->
+        </service>
+
+        <service id="doctrine_phpcr.jackalope_doctrine_dbal.schema"
+                 class="%doctrine_phpcr.jackalope_doctrine_dbal.repository_schema.class%"
+                 public="false"
+        />
+
+        <service id="doctrine_phpcr.jackalope_doctrine_dbal.schema_listener"
+                 class="%doctrine_phpcr.jackalope_doctrine_dbal.schema_listener.class%">
+            <argument type="service" id="doctrine_phpcr.jackalope_doctrine_dbal.schema" />
+        </service>
+
+    </services>
+
+</container>

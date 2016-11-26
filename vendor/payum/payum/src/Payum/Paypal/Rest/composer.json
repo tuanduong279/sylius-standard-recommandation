@@ -1,0 +1,49 @@
+{
+    "name": "payum/paypal-rest",
+    "type": "library",
+    "description": "The Payum extension. It provides Paypal REST payment integration.",
+    "keywords": ["payment", "paypal", "rest"],
+    "homepage": "http://payum.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Polyakov",
+            "email": "poljakov.ws@gmail.com"
+        },
+        {
+            "name": "Kotlyar Maksim",
+            "email": "kotlyar.maksim@gmail.com"
+        },
+        {
+            "name":     "Payum project",
+            "homepage": "http://payum.org/"
+        },
+        {
+            "name":     "Community contributions",
+            "homepage": "https://github.com/Payum/PaypalRest/contributors"
+        }
+    ],
+    "require": {
+        "payum/core": "~1.0",
+        "paypal/rest-api-sdk-php" : "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "symfony/phpunit-bridge": "~2.8|~3.0"
+    },
+    "autoload": {
+        "psr-0": { "Payum\\Paypal\\Rest": "" }
+    },
+    "target-dir": "Payum/Paypal/Rest",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    }
+}
+
+
+
